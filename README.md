@@ -68,7 +68,7 @@ If you have any questions or problems, please contact the project team. Thank yo
 ### 1. Install strimzi operator
 
 ---
-The [Strimzi operator](https://github.com/strimzi/strimzi-kafka-operator) is an open-source Kubernetes operator designed to manage Apache Kafka clusters. It automates the deployment, configuration, and management of Kafka clusters, making it easier to operate and scale Kafka in a Kubernetes environment. The operator provides custom resources and controllers to create, update, and delete Kafka clusters and their associated resources, such as topics, users, and ACLs.
+The [Strimzi kafka operator](https://github.com/strimzi/strimzi-kafka-operator) is an open-source Kubernetes operator designed to manage Apache Kafka clusters. It automates the deployment, configuration, and management of Kafka clusters, making it easier to operate and scale Kafka in a Kubernetes environment. The operator provides custom resources and controllers to create, update, and delete Kafka clusters and their associated resources, such as topics, users, and ACLs.
 ```bash
 helm repo add strimzi https://strimzi.io/charts/
 helm install strimzi strimzi/strimzi-kafka-operator
@@ -88,8 +88,8 @@ Now you have a Kafka-Cluster running on localhost:32100
 ### 3. Build optin-optout-library
 
 ---
-Running "mvn install" in the Library directory ensures that the Library's artifacts are installed
-in your local Maven repository, making them available to other projects that depend on them.
+Running "mvn install" in the library directory ensures that the library's artifacts are installed
+in your local maven repository, making them available to other projects that depend on them.
 ```bash
 cd optin-optout-library
 mvn install
@@ -125,8 +125,8 @@ yarn dev
 ### 7. Deploy Kafka-Connect with Sink-Connector
 
 ---
-To deploy Kafka-Connect we first have to build the Docker Image, including the JDBC-Plugin from Confluent.
-Download the Plugin (confluentinc-kafka-connect-jdbc-10.6.0) from [confluent.io](https://www.confluent.io/hub/confluentinc/kafka-connect-jdbc) and place the
+To deploy Kafka-Connect we first have to build the docker image, including the JDBC-Plugin from Confluent.
+Download the plugin (confluentinc-kafka-connect-jdbc-10.6.0) from [confluent.io](https://www.confluent.io/hub/confluentinc/kafka-connect-jdbc) and place the
 zip file in "./connectors". 
 
 Before we can build the image we need to deploy a local registry server.
@@ -144,10 +144,7 @@ sh build-local.sh
 Now we need to add and install the [postgres-operator](https://github.com/zalando/postgres-operator).
 
 ```bash
-# add repo for postgres-operator
 helm repo add postgres-operator-charts https://opensource.zalando.com/postgres-operator/charts/postgres-operator
-
-# install the postgres-operator
 helm install postgres-operator postgres-operator-charts/postgres-operator
 ```
 After adding the postgres connector we can deploy kafka-connect
@@ -156,14 +153,18 @@ After adding the postgres connector we can deploy kafka-connect
 cd helm/kafka-connect
 helm install kafka-connect .
 ```
-We need to get die passwort of the sink-user for the sink-database.
+
+To get the password for the created database, run following command:
 
 ```bash
 echo $(kubectl get secret sinkuser.sink-database-minimal-cluster.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)
 ```
-Now u can update the database password in 
-"./helm/kafka-connect/values.yaml" postgres.sink.connection.password. and in the application.yaml in "database-rest/src/main/resources"
-Afterwards we need to upgrade our kafka connect.
+The password must now be entered in two places:
+
+- "./helm/kafka-connect/values.yaml" at postgres.sink.connection.password
+- "./database-rest/src/main/resources" at spring.datasource.password
+
+Afterwards we need to upgrade our kafka connect:
 
 ```bash
 cd helm/kafka-connect
@@ -172,12 +173,12 @@ helm upgrade kafka-connect .
 
 ### 8. Build and run database-rest application
 
-First we need to set port forwarding.
+To access the database outside kubernetes we need to set port forwarding.
 
 ```bash
 kubectl port-forward sink-database-minimal-cluster-0 5432:5432  
 ```
-Afterwards in a new Terminal u can start the application.
+Afterwards in a new terminal you can start the application.
 
 ```bash
 cd database-rest
@@ -187,7 +188,6 @@ mvn spring-boot:run
 
 ## Cleanup
 
-
 ```bash
 helm uninstall kafka-cluster
 helm uninstall kafka-connect
@@ -195,4 +195,6 @@ helm uninstall postgres-operator
 helm uninstall strimzi
 helm repo remove postgres-operator-charts
 helm repo remove strimzi
+docker stop registry
+docker rm registry
 ```
