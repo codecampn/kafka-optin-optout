@@ -1,0 +1,17 @@
+{{- if .Values.letsEncrypt.enabled -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "kafka-cluster.fullname" . }}-le
+spec:
+  secretName: {{ include "kafka-cluster.fullname" . }}-le
+  issuerRef:
+    name: {{ .Values.letsEncrypt.issuerName }}
+    kind: {{ .Values.letsEncrypt.issuerType }}
+    group: cert-manager.io
+  subject:
+    organizations:
+      - {{ .Values.letsEncrypt.organization }}
+  dnsNames:
+    {{- .Values.letsEncrypt.hostnames | toYaml | nindent 4 }}
+{{- end -}}

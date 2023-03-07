@@ -1,0 +1,119 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Customer Info Service
+  license:
+    name: MIT
+paths:
+  /customer/{customerId}/consent/{channel}:
+      post:
+        summary: Give consent for advertisment in the given channel
+        operationId: grantConsent
+        tags:
+          - consent
+        parameters:
+          - name: customerId
+            in: path
+            required: true
+            description: The id of the customer to retrieve
+            schema:
+              type: string
+          - name: channel
+            in: path
+            required: true
+            description: The channel to grant the consent to
+            schema:
+              type: string
+        requestBody:
+          description: "Target Mail or Phone"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - target
+                properties:
+                  target:
+                    type: string
+        responses:
+          '201':
+            description: Empty response
+            content: {}
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+  /customer/{customerId}/revoke/{channel}:
+    post:
+      summary: Revoke consent for advertisment in the given channel
+      operationId: revokeConsent
+      tags:
+        - consent
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The id of the customer to retrieve
+          schema:
+            type: string
+        - name: channel
+          in: path
+          required: true
+          description: The channel to revoke the consent to
+          schema:
+            type: string
+      requestBody:
+        description: "Target Mail or Phone"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+              properties:
+                target:
+                  type: string
+      responses:
+        '201':
+          description: Empty response
+          content: { }
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Customer:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Customers:
+      type: array
+      items:
+        $ref: "#/components/schemas/Customer"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

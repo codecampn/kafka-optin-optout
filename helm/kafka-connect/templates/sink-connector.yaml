@@ -1,0 +1,29 @@
+{{- if .Values.postgres.sink.deploymentActive -}}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sink-connector
+  labels:
+    strimzi.io/cluster: {{ include "kafka-connect.fullname" .}}
+spec:
+  class: io.confluent.connect.jdbc.JdbcSinkConnector
+  tasksMax: 1
+  config:
+    connection.url: jdbc:postgresql://{{ .Values.postgres.sink.connection.host }}:{{ .Values.postgres.sink.connection.port }}/{{ .Values.postgres.sink.connection.database }}
+    connection.user: {{ .Values.postgres.sink.connection.user }}
+    connection.password: {{ .Values.postgres.sink.connection.password }}
+    auto.create: {{ .Values.postgres.sink.autoCreate }}
+    topics: {{ .Values.postgres.sink.topics }}
+    pk.mode: {{ .Values.postgres.sink.pkMode }}
+    pk.fields: {{ .Values.postgres.sink.pkFields }}
+    auto.evolve: {{ .Values.postgres.sink.autoEvolve }}
+    value.converter: {{ .Values.postgres.sink.valueConverter }}
+    key.converter: {{ .Values.postgres.sink.keyConverter }}
+    delete.enabled: {{ .Values.postgres.sink.deleteEnabled }}
+    insert.mode: {{ .Values.postgres.sink.insertMode }}
+    table.name.format: {{ .Values.postgres.sink.tableNameFormat }}
+    fields.whitelist: {{ .Values.postgres.sink.fieldsWhitelist }}
+    value.converter.schemas.enable: {{ .Values.postgres.sink.enableValueSchema }}
+    key.converter.schemas.enable: {{ .Values.postgres.sink.enableKeySchema }}
+    behavior.on.null.values: {{ .Values.postgres.sink.behaviorOnNullValues }}
+{{- end -}}

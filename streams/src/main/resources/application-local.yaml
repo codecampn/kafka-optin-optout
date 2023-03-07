@@ -1,0 +1,10 @@
+production: false
+server:
+  port: 8081
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+    streams:
+      cache-max-size-buffering: '0'
+    bootstrap-servers: localhost:32100

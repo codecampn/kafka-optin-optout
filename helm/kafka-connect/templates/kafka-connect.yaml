@@ -1,0 +1,29 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: {{ include "kafka-connect.fullname" .}}
+  annotations:
+    strimzi.io/use-connector-resources: "true"
+spec:
+  version: 3.3.2
+  replicas: 1
+  image: {{ .Values.connect.image }}
+  bootstrapServers: {{ .Values.connect.bootstrapServer }}
+{{/*  tls:*/}}
+{{/*    trustedCertificates:*/}}
+{{/*      - secretName: my-cluster-cluster-ca-cert*/}}
+{{/*        certificate: ca.crt*/}}
+  config:
+    group.id: {{ include "kafka-connect.fullname" . }}-cluster
+    offset.storage.topic: {{ include "kafka-connect.fullname" . }}-cluster-offsets
+    config.storage.topic: {{ include "kafka-connect.fullname" . }}-cluster-configs
+    status.storage.topic: {{ include "kafka-connect.fullname" . }}-cluster-status
+    config.storage.replication.factor: 3
+    offset.storage.replication.factor: 3
+    status.storage.replication.factor: 3
+  livenessProbe:
+    periodSeconds: 60
+    failureThreshold: 10
+  readinessProbe:
+    periodSeconds: 60
+    failureThreshold: 10

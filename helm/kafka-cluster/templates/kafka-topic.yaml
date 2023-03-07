@@ -1,0 +1,9 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: consent.preference
+  labels:
+    strimzi.io/cluster: {{ include "kafka-cluster.fullname" . }}
+spec:
+  partitions: 3
+  replicas: 3

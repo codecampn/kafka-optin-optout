@@ -1,0 +1,15 @@
+server.port: 8085
+production: false
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: "localhost:32100"
+      client-id: "client1-xy"
+      key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+      value-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+    consumer:
+      bootstrap-servers: "localhost:32100"
+      enable-auto-commit: false
+      group-id: "group1-xy"
+      key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      value-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"

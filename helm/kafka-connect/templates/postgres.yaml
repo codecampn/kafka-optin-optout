@@ -1,0 +1,17 @@
+{{- if .Values.postgres.local -}}
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: sink-database-minimal-cluster
+spec:
+  teamId: "sink"
+  volume:
+    size: 1Gi
+  numberOfInstances: 1
+  users:
+    sinkuser:  # database owner
+      - superuser
+      - createdb
+  postgresql:
+    version: "15"
+{{- end -}}

@@ -1,0 +1,15 @@
+{{- if .Values.kafka.users -}}
+{{- $clusterName := printf "%s-kafka-cluster" (include "kafka-cluster.fullname" .) -}}
+{{- range .Values.kafka.users }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .name }}
+  labels:
+    strimzi.io/cluster: {{ $clusterName }}
+spec:
+  authentication:
+    type: tls
+{{- end }}
+{{- end }}

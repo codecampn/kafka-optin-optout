@@ -1,0 +1,22 @@
+{{- if .Values.postgres.source.deploymentActive -}}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: source-connector
+  labels:
+    strimzi.io/cluster: {{ include "kafka-connect.fullname" .}}
+spec:
+  class: io.debezium.connector.postgresql.PostgresConnector
+  tasksMax: 1
+  config:
+    database.hostname: {{ .Values.postgres.source.connection.host }}
+    database.port: {{ .Values.postgres.source.connection.port }}
+    database.user: {{ .Values.postgres.source.connection.user }}
+    database.password: {{ .Values.postgres.source.connection.password }}
+    database.dbname: {{ .Values.postgres.source.connection.database }}
+    plugin.name: "pgoutput"
+    publication.autocreate.mode: "filtered"
+    topic.prefix: {{ .Values.postgres.source.topic.prefix }}
+    table.include.list: {{ .Values.postgres.source.table.include.list }}
+    message.key.columns: {{ .Values.postgres.source.message.key.columns }}
+{{- end -}}
