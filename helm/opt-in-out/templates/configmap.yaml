@@ -1,0 +1,38 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "opt-in-out.fullname" . }}-application-properties
+data:
+  application.yml: |
+    server:
+      port: 8085
+    spring:
+      kafka:
+        producer:
+          ssl:
+            trust-store-location: "security/truststore.jks"
+            trust-store-password: "password"
+            key-store-location: "security/keystore.jks"
+            key-store-password: "password"
+            key-password: "password"
+          security:
+            protocol: "SSL"
+          bootstrap-servers: "bootstrap.kafka.codecamp-n.dev:9093"
+          client-id: "client1"
+          key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+          value-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+        consumer:
+          ssl:
+            trust-store-location: "security/truststore.jks"
+            trust-store-password: "password"
+            key-store-location: "security/keystore.jks"
+            key-store-password: "password"
+            key-password: "password"
+          security:
+            protocol: "SSL"
+          bootstrap-servers: "bootstrap.kafka.codecamp-n.dev:9093"
+          enable-auto-commit: "false"
+          group-id: "group1"
+          key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+          value-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+
