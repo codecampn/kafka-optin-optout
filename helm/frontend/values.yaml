@@ -13,13 +13,15 @@ ingress:
   enabled: true
   className: nginx
   hosts:
-    - host: frontend
+    - host: localhost
       paths:
-        - path: /
-          pathType: ImplementationSpecific
+        - pathType: Prefix
           backend:
-            serviceName: frontend
-            servicePort: 80
+            service:
+              name: frontend
+              port:
+                number: 80
+          path: /
 
 imagePullSecrets: []
 nameOverride: ""
