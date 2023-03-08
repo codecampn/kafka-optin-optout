@@ -24,7 +24,7 @@ export default defineConfig({
     },
   },
   database: {
-    input: '../database-rest/src/main/resources/api.yaml',
+    input: './src/intern-api.yaml',
     output: {
       target: './src/api/database.ts',
       schemas: './src/api/model-database',

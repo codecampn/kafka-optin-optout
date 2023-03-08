@@ -7,7 +7,7 @@ import { useGetSinkDatabase } from '@/api/database';
 import { ChannelConsent, CustomerConsent } from '@/api/model';
 import { SinkDatabase } from '@/api/model-database/sinkDatabase';
 export default function Overview() {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_DATABASE_BASE_URL;
+  axios.defaults.baseURL = '';
 
   const { data, isLoading, isError } = useGetSinkDatabase();
   if (isLoading) {

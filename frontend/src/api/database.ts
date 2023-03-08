@@ -21,10 +21,10 @@ import type { SinkDatabase, Error } from './model-database';
 export const getSinkDatabase = (
   options?: AxiosRequestConfig
 ): Promise<AxiosResponse<SinkDatabase>> => {
-  return axios.get(`/customer-consents`, options);
+  return axios.get(`/api/database`, options);
 };
 
-export const getGetSinkDatabaseQueryKey = () => [`/customer-consents`];
+export const getGetSinkDatabaseQueryKey = () => [`/api/database`];
 
 export type GetSinkDatabaseQueryResult = NonNullable<
   Awaited<ReturnType<typeof getSinkDatabase>>
