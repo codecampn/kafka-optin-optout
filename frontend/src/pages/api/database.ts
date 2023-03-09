@@ -1,14 +1,12 @@
 import { SinkDatabase } from '@/api/model-database';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse<SinkDatabase | any>
+  res: NextApiResponse<SinkDatabase>
 ) {
-  // const data = await axios.get('http://localhost:8080/customer-consents');
-  //   .data;
+
   const data = await getChannelConsents();
 
   // Get data from your database
