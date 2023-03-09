@@ -3,6 +3,7 @@ package com.codecampn.nv.poc.streams;
 import org.apache.kafka.common.config.SslConfigs;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.StreamsConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +21,6 @@ import static org.apache.kafka.streams.StreamsConfig.*;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-
-    @Value(value = "${production}")
-    private Boolean production;
-
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
@@ -49,12 +46,11 @@ public class KafkaConfig {
 
     private  Map<String, Object>  getDefaultProps() throws IOException {
         Map<String, Object> props = new HashMap<>();
-        props.put(APPLICATION_ID_CONFIG, "default-stream-app");
         props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, STRING_SERDE.getClass().getName());
         props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, STRING_SERDE.getClass().getName());
 
-        if(production){
+        if("SSL".equals(securityProtocol)){
             props.put(SECURITY_PROTOCOL_CONFIG, securityProtocol);
             props.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, sslKeyPassword);
             props.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, trustStorePassword);
@@ -68,14 +64,14 @@ public class KafkaConfig {
     @Bean("sinkApp")
     public StreamsBuilderFactoryBean sinkApp() throws IOException {
         Map<String, Object> props = getDefaultProps();
-        props.put(APPLICATION_ID_CONFIG, "sink-app-local");
+        props.put(APPLICATION_ID_CONFIG, "sink-app");
         return new StreamsBuilderFactoryBean(new KafkaStreamsConfiguration(props));
     }
 
     @Bean("tableApp")
     public StreamsBuilderFactoryBean tableApp() throws IOException {
         Map<String, Object> props = getDefaultProps();
-        props.put(APPLICATION_ID_CONFIG, "ktable-app-local");
+        props.put(APPLICATION_ID_CONFIG, "ktable-app");
         return new StreamsBuilderFactoryBean(new KafkaStreamsConfiguration(props));
     }
 }

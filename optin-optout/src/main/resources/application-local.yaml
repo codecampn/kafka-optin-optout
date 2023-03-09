@@ -1,5 +1,4 @@
 server.port: 8085
-production: false
 spring:
   kafka:
     producer:

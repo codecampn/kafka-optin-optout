@@ -12,10 +12,6 @@ import java.util.Properties;
 
 @Configuration
 public class ConsumerConfiguration {
-
-    @Value(value = "${production}")
-    private Boolean production;
-
     @Value(value = "${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -57,7 +53,7 @@ public class ConsumerConfiguration {
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializer);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializer);
-        if(production){
+        if("SSL".equals(securityProtocol)){
             properties.put("security.protocol", securityProtocol);
             properties.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, sslKeyPassword);
             properties.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, trustStorePassword);

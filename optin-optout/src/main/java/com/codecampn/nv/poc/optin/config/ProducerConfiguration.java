@@ -12,10 +12,6 @@ import java.util.Properties;
 
 @Configuration
 public class ProducerConfiguration {
-
-    @Value(value = "${production}")
-    private Boolean production;
-
     @Value(value = "${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -53,7 +49,7 @@ public class ProducerConfiguration {
         properties.put(ProducerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
-        if(production){
+        if("SSL".equals(securityProtocol)){
             properties.put("security.protocol", securityProtocol);
             properties.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, sslKeyPassword);
             properties.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, trustStorePassword);
