@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: {{ include "opt-in-out.fullname" . }}
 data:
-  server.port: "8085"
+  server.port: "8080"
   spring.kafka.producer.bootstrap-servers: "kafka-cluster-kafka-bootstrap:9092"
   spring.kafka.producer.client-id: "client1"
   spring.kafka.producer.key-serializer: "org.apache.kafka.common.serialization.StringSerializer"

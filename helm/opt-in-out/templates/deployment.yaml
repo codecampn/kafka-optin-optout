@@ -38,7 +38,7 @@ spec:
                 name: {{ include "opt-in-out.fullname" . }}
           ports:
             - name: http
-              containerPort: 8085
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:

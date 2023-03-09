@@ -35,7 +35,7 @@ postgres:
       port: 5432
       database: "postgres"
       user: "sinkuser"
-      password: "XqSmA0OzxIqrGVkRh0BtaRsxPVyXySxIOlCSYLCckmxKDiO23Q9PVajFYSPyK1c6"
+      password: "G2hhEk80e67XSLgsFecqsJmXq5siYSHYoZx6gUPkUqHBQYgn1nYhn10DIFPDSLpA"
     topics: consent.preference.sink
     autoCreate: true
     autoEvolve: true
