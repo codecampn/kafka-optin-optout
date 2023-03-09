@@ -23,11 +23,11 @@ export default defineConfig({
       afterAllFilesWrite: 'prettier --write',
     },
   },
-  database: {
+  internal: {
     input: './src/intern-api.yaml',
     output: {
-      target: './src/api/database.ts',
-      schemas: './src/api/model-database',
+      target: './src/api/internal-api.ts',
+      schemas: './src/api/model',
       client: 'react-query',
     },
     hooks: {

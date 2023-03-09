@@ -1,11 +1,11 @@
 import React from 'react';
-import { useGetAggregate } from '@/api/aggregate';
 import { Container } from '@/components/Container';
 import axios from 'axios';
 import { Spinner } from '@/components/Spinner';
 import { Table } from '@/components/Table';
+import { useGetAggregate } from '@/api/internal-api';
 export default function KTablePage() {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_KTABLE_BASE_URL;
+  axios.defaults.baseURL = '';
 
   const { data, isLoading, isError } = useGetAggregate();
   if (isLoading) {
@@ -21,4 +21,3 @@ export default function KTablePage() {
     </Container>
   );
 }
-

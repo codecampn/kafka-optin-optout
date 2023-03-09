@@ -4,8 +4,6 @@
  * Database Info Service
  * OpenAPI spec version: 1.0.0
  */
+import type { SinkDatabaseItem } from './sinkDatabaseItem';
 
-export interface Error {
-  code: number;
-  message: string;
-}
+export type SinkDatabase = SinkDatabaseItem[];

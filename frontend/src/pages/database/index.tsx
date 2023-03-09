@@ -3,9 +3,9 @@ import { Container } from '@/components/Container';
 import axios from 'axios';
 import { Table } from '@/components/Table';
 import { Spinner } from '@/components/Spinner';
-import { useGetSinkDatabase } from '@/api/database';
 import { ChannelConsent, CustomerConsent } from '@/api/model';
 import { SinkDatabase } from '@/api/model-database/sinkDatabase';
+import { useGetSinkDatabase } from '@/api/internal-api';
 export default function Overview() {
   axios.defaults.baseURL = '';
 

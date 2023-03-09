@@ -24,6 +24,25 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
         - database
+  /api/ktable:
+    get:
+      summary: Get all Customer Consents
+      operationId: getAggregate
+      tags:
+        - aggregate
+      responses:
+        '200':
+          description: A list of Customer Consents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerConsents"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     Error:
@@ -63,3 +82,35 @@ components:
           time:
             type: string
             description: The time of the communication in Unix timestamp format
+    ChannelConsent:
+      type: object
+      required:
+        - channel
+        - consentDate
+        - source
+        - target
+      properties:
+        channel:
+          type: string
+        consentDate:
+          type: string
+        source:
+          type: string
+        target:
+          type: string
+    CustomerConsent:
+      type: object
+      required:
+        - customerId
+        - channelConsents
+      properties:
+        customerId:
+          type: string
+        channelConsents:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChannelConsent"
+    CustomerConsents:
+      type: array
+      items:
+        $ref: "#/components/schemas/CustomerConsent"
