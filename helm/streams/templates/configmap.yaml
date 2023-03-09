@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "streams.fullname" . }}
+data:
+  spring.kafka.consumer.auto-offset-reset: "earliest"
+  spring.kafka.bootstrap-servers: "kafka-cluster-kafka-bootstrap:9092"
+{{/*  spring.kafka.streams.ssl.trust-store-location: "security/truststore.jks"*/}}
+{{/*  spring.kafka.streams.ssl.trust-store-password: "password"*/}}
+{{/*  spring.kafka.streams.ssl.key-store-location: "security/keystore.jks"*/}}
+{{/*  spring.kafka.streams.ssl.key-store-password: "password"*/}}
+{{/*  spring.kafka.streams.ssl.key-password: "password"*/}}
+{{/*  spring.kafka.streams.security.protocol: "SSL"*/}}
+  spring.kafka.cache-max-size-buffering: "0"

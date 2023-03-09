@@ -46,13 +46,20 @@ ingress:
   enabled: true
   className: nginx
   hosts:
-    - host: optinout
+    - host: localhost
       paths:
         - path: /
           pathType: ImplementationSpecific
           backend:
-            serviceName: optinout
+            serviceName: opt-in-out
             servicePort: 80
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: opt-in-out
+              port:
+                number: 80
 
 
 resources:
