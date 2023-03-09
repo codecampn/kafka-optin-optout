@@ -8,9 +8,9 @@ paths:
   /customer-consents:
     get:
       summary: Get all Customer Consents
-      operationId: getAggregate
+      operationId: getKTable
       tags:
-        - aggregate
+        - ktable
       responses:
         '200':
           description: A list of Customer Consents

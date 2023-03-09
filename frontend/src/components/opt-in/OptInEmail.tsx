@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useGrantConsent } from '@/api/opt-out';
+import { useGrantConsent } from '@/api/internal-api';
 import axios from 'axios';
 
 import { FormikState } from 'formik';
@@ -8,7 +8,7 @@ import { OptInOut, OptInOutForm, OptInOutProps } from '../OptInOut';
 import { EMAIL_FORM_SCHEMA } from '../schemas';
 
 export function OptInEmail() {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_OPTINOUT_BASE_URL;
+  axios.defaults.baseURL = '';
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
@@ -22,9 +22,11 @@ export function OptInEmail() {
   ) => {
     setPending(true);
     mutateAsyncGrant({
-      customerId: values.userId,
-      channel: 'mail',
-      data: { target: values.target },
+      data: {
+        target: values.target,
+        channel: 'mail',
+        customerId: values.userId,
+      },
     })
       .catch((e) => {
         setOptInError(e);

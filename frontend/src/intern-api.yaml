@@ -43,6 +43,74 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /api/grant-consent:
+      post:
+        summary: Give consent for advertisment in the given channel
+        operationId: grantConsent
+        tags:
+          - consent
+        requestBody:
+          description: "Target Mail or Phone"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - customerId
+                  - target
+                  - channel
+                properties:
+                  target:
+                    type: string
+                  customerId:
+                    type: string
+                  channel:
+                    type: string
+        responses:
+          '201':
+            description: Empty response
+            content: {}
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+  /api/revoke-consent:
+      post:
+        summary: Give consent for advertisment in the given channel
+        operationId: revokeConsent
+        tags:
+          - consent
+        requestBody:
+          description: "Target Mail or Phone"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - target
+                  - customerId
+                  - channel
+                properties:
+                  target:
+                    type: string
+                  customerId:
+                    type: string
+                  channel:
+                    type: string
+        responses:
+          '201':
+            description: Empty response
+            content: {}
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
 components:
   schemas:
     Error:

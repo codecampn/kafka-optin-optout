@@ -1,4 +1,4 @@
-import { SinkDatabase } from '@/api/model-database';
+import { SinkDatabase } from '@/api/model';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
 

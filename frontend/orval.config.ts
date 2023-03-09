@@ -6,7 +6,6 @@ export default defineConfig({
     output: {
       target: './src/api/opt-out.ts',
       schemas: './src/api/model',
-      client: 'react-query',
     },
     hooks: {
       afterAllFilesWrite: 'prettier --write',
@@ -15,9 +14,8 @@ export default defineConfig({
   ktable: {
     input: '../streams/src/main/resources/api.yaml',
     output: {
-      target: './src/api/aggregate.ts',
+      target: './src/api/ktable.ts',
       schemas: './src/api/model',
-      client: 'react-query',
     },
     hooks: {
       afterAllFilesWrite: 'prettier --write',
