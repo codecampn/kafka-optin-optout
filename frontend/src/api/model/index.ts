@@ -7,6 +7,8 @@ export * from './customers';
 export * from './error';
 export * from './grantConsentBody';
 export * from './grantConsentExBody';
+export * from './invokeGrantConsentBody';
+export * from './invokeRevokeConsentBody';
 export * from './revokeConsentBody';
 export * from './revokeConsentExBody';
 export * from './sinkDatabase';

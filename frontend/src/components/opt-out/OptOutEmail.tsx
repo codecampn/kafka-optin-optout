@@ -5,14 +5,14 @@ import axios from 'axios';
 import { FormikState } from 'formik';
 import { OptInOut, OptInOutForm, OptInOutProps } from '../OptInOut';
 import { EMAIL_FORM_SCHEMA } from '../schemas';
-import { useRevokeConsent } from '@/api/internal-api';
+import { useInvokeRevokeConsent } from '@/api/internal-api';
 
 export function OptOutEmail() {
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_OPTINOUT_BASE_URL;
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
-  const { mutateAsync: mutateAsyncRevoke } = useRevokeConsent();
+  const { mutateAsync: mutateAsyncRevoke } = useInvokeRevokeConsent();
 
   const optOutEmail = async (
     values: OptInOutForm,

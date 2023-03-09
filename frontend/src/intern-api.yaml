@@ -46,7 +46,7 @@ paths:
   /api/grant-consent:
       post:
         summary: Give consent for advertisment in the given channel
-        operationId: grantConsent
+        operationId: invokeGrantConsent
         tags:
           - consent
         requestBody:
@@ -80,7 +80,7 @@ paths:
   /api/revoke-consent:
       post:
         summary: Give consent for advertisment in the given channel
-        operationId: revokeConsent
+        operationId: invokeRevokeConsent
         tags:
           - consent
         requestBody:

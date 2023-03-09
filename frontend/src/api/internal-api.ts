@@ -19,8 +19,8 @@ import type {
   SinkDatabase,
   Error,
   CustomerConsents,
-  GrantConsentBody,
-  RevokeConsentBody,
+  InvokeGrantConsentBody,
+  InvokeRevokeConsentBody,
 } from './model';
 
 /**
@@ -122,27 +122,27 @@ export const useGetAggregate = <
 /**
  * @summary Give consent for advertisment in the given channel
  */
-export const grantConsent = (
-  grantConsentBody: GrantConsentBody,
+export const invokeGrantConsent = (
+  invokeGrantConsentBody: InvokeGrantConsentBody,
   options?: AxiosRequestConfig
 ): Promise<AxiosResponse<unknown>> => {
-  return axios.post(`/api/grant-consent`, grantConsentBody, options);
+  return axios.post(`/api/grant-consent`, invokeGrantConsentBody, options);
 };
 
-export type GrantConsentMutationResult = NonNullable<
-  Awaited<ReturnType<typeof grantConsent>>
+export type InvokeGrantConsentMutationResult = NonNullable<
+  Awaited<ReturnType<typeof invokeGrantConsent>>
 >;
-export type GrantConsentMutationBody = GrantConsentBody;
-export type GrantConsentMutationError = AxiosError<Error>;
+export type InvokeGrantConsentMutationBody = InvokeGrantConsentBody;
+export type InvokeGrantConsentMutationError = AxiosError<Error>;
 
-export const useGrantConsent = <
+export const useInvokeGrantConsent = <
   TError = AxiosError<Error>,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof grantConsent>>,
+    Awaited<ReturnType<typeof invokeGrantConsent>>,
     TError,
-    { data: GrantConsentBody },
+    { data: InvokeGrantConsentBody },
     TContext
   >;
   axios?: AxiosRequestConfig;
@@ -150,18 +150,18 @@ export const useGrantConsent = <
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof grantConsent>>,
-    { data: GrantConsentBody }
+    Awaited<ReturnType<typeof invokeGrantConsent>>,
+    { data: InvokeGrantConsentBody }
   > = (props) => {
     const { data } = props ?? {};
 
-    return grantConsent(data, axiosOptions);
+    return invokeGrantConsent(data, axiosOptions);
   };
 
   return useMutation<
-    Awaited<ReturnType<typeof grantConsent>>,
+    Awaited<ReturnType<typeof invokeGrantConsent>>,
     TError,
-    { data: GrantConsentBody },
+    { data: InvokeGrantConsentBody },
     TContext
   >(mutationFn, mutationOptions);
 };
@@ -169,27 +169,27 @@ export const useGrantConsent = <
 /**
  * @summary Give consent for advertisment in the given channel
  */
-export const revokeConsent = (
-  revokeConsentBody: RevokeConsentBody,
+export const invokeRevokeConsent = (
+  invokeRevokeConsentBody: InvokeRevokeConsentBody,
   options?: AxiosRequestConfig
 ): Promise<AxiosResponse<unknown>> => {
-  return axios.post(`/api/revoke-consent`, revokeConsentBody, options);
+  return axios.post(`/api/revoke-consent`, invokeRevokeConsentBody, options);
 };
 
-export type RevokeConsentMutationResult = NonNullable<
-  Awaited<ReturnType<typeof revokeConsent>>
+export type InvokeRevokeConsentMutationResult = NonNullable<
+  Awaited<ReturnType<typeof invokeRevokeConsent>>
 >;
-export type RevokeConsentMutationBody = RevokeConsentBody;
-export type RevokeConsentMutationError = AxiosError<Error>;
+export type InvokeRevokeConsentMutationBody = InvokeRevokeConsentBody;
+export type InvokeRevokeConsentMutationError = AxiosError<Error>;
 
-export const useRevokeConsent = <
+export const useInvokeRevokeConsent = <
   TError = AxiosError<Error>,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof revokeConsent>>,
+    Awaited<ReturnType<typeof invokeRevokeConsent>>,
     TError,
-    { data: RevokeConsentBody },
+    { data: InvokeRevokeConsentBody },
     TContext
   >;
   axios?: AxiosRequestConfig;
@@ -197,18 +197,18 @@ export const useRevokeConsent = <
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof revokeConsent>>,
-    { data: RevokeConsentBody }
+    Awaited<ReturnType<typeof invokeRevokeConsent>>,
+    { data: InvokeRevokeConsentBody }
   > = (props) => {
     const { data } = props ?? {};
 
-    return revokeConsent(data, axiosOptions);
+    return invokeRevokeConsent(data, axiosOptions);
   };
 
   return useMutation<
-    Awaited<ReturnType<typeof revokeConsent>>,
+    Awaited<ReturnType<typeof invokeRevokeConsent>>,
     TError,
-    { data: RevokeConsentBody },
+    { data: InvokeRevokeConsentBody },
     TContext
   >(mutationFn, mutationOptions);
 };

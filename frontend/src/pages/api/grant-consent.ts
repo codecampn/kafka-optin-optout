@@ -1,7 +1,7 @@
 import { CustomerConsents } from '@/api/model';
 import { AxiosError, AxiosResponse } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next/types';
-import { grantConsentEx } from '@/api/opt-out';
+import { grantConsent  } from '@/api/opt-out';
 
 export default async function handler(
   _req: NextApiRequest,
@@ -11,7 +11,7 @@ export default async function handler(
     body: { target, channel, customerId },
   } = _req;
   if (_req.method === 'POST') {
-    return grantConsentEx(
+    return grantConsent(
       customerId,
       channel,
       {

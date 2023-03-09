@@ -5,14 +5,14 @@ import axios from 'axios';
 import { FormikState } from 'formik';
 import { OptInOut, OptInOutForm, OptInOutProps } from '../OptInOut';
 import { PHONE_FORM_SCHEMA } from '../schemas';
-import { useRevokeConsent } from '@/api/internal-api';
+import { useInvokeGrantConsent } from '@/api/internal-api';
 
 export function OptInPhone() {
   axios.defaults.baseURL = '';
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
-  const { mutateAsync: mutateAsyncGrant } = useRevokeConsent();
+  const { mutateAsync: mutateAsyncGrant } = useInvokeGrantConsent();
 
   const optInPhone = async (
     values: OptInOutForm,

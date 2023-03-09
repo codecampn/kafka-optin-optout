@@ -6,20 +6,20 @@
  */
 import axios from 'axios';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { GrantConsentExBody, RevokeConsentExBody } from './model';
+import type { GrantConsentBody, RevokeConsentBody } from './model';
 
 /**
  * @summary Give consent for advertisment in the given channel
  */
-export const grantConsentEx = <TData = AxiosResponse<unknown>>(
+export const grantConsent = <TData = AxiosResponse<unknown>>(
   customerId: string,
   channel: string,
-  grantConsentExBody: GrantConsentExBody,
+  grantConsentBody: GrantConsentBody,
   options?: AxiosRequestConfig
 ): Promise<TData> => {
   return axios.post(
     `/customer/${customerId}/consent/${channel}`,
-    grantConsentExBody,
+    grantConsentBody,
     options
   );
 };
@@ -27,18 +27,18 @@ export const grantConsentEx = <TData = AxiosResponse<unknown>>(
 /**
  * @summary Revoke consent for advertisment in the given channel
  */
-export const revokeConsentEx = <TData = AxiosResponse<unknown>>(
+export const revokeConsent = <TData = AxiosResponse<unknown>>(
   customerId: string,
   channel: string,
-  revokeConsentExBody: RevokeConsentExBody,
+  revokeConsentBody: RevokeConsentBody,
   options?: AxiosRequestConfig
 ): Promise<TData> => {
   return axios.post(
     `/customer/${customerId}/revoke/${channel}`,
-    revokeConsentExBody,
+    revokeConsentBody,
     options
   );
 };
 
-export type GrantConsentExResult = AxiosResponse<unknown>;
-export type RevokeConsentExResult = AxiosResponse<unknown>;
+export type GrantConsentResult = AxiosResponse<unknown>;
+export type RevokeConsentResult = AxiosResponse<unknown>;

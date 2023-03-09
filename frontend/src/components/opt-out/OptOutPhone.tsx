@@ -4,14 +4,14 @@ import axios from 'axios';
 import { PHONE_FORM_SCHEMA } from '@/components/schemas';
 import { OptInOut, OptInOutForm, OptInOutProps } from '@/components/OptInOut';
 import { FormikState } from 'formik';
-import { useRevokeConsent } from '@/api/internal-api';
+import { useInvokeRevokeConsent } from '@/api/internal-api';
 
 export function OptOutPhone() {
   axios.defaults.baseURL = '';
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
-  const { mutateAsync: mutateAsyncRevoke } = useRevokeConsent();
+  const { mutateAsync: mutateAsyncRevoke } = useInvokeRevokeConsent();
 
   const optOutPhone = async (
     values: OptInOutForm,

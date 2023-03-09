@@ -8,7 +8,7 @@ paths:
   /customer/{customerId}/consent/{channel}:
       post:
         summary: Give consent for advertisment in the given channel
-        operationId: grantConsentEx
+        operationId: grantConsent
         tags:
           - consent
         parameters:
@@ -49,7 +49,7 @@ paths:
   /customer/{customerId}/revoke/{channel}:
     post:
       summary: Revoke consent for advertisment in the given channel
-      operationId: revokeConsentEx
+      operationId: revokeConsent
       tags:
         - consent
       parameters:

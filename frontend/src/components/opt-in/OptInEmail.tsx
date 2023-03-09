@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useGrantConsent } from '@/api/internal-api';
+import { useInvokeGrantConsent } from '@/api/internal-api';
 import axios from 'axios';
 
 import { FormikState } from 'formik';
@@ -12,7 +12,7 @@ export function OptInEmail() {
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
-  const { mutateAsync: mutateAsyncGrant } = useGrantConsent();
+  const { mutateAsync: mutateAsyncGrant } = useInvokeGrantConsent();
 
   const optInEmail = async (
     values: OptInOutForm,
