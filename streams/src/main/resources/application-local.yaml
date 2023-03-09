@@ -1,4 +1,3 @@
-production: false
 server:
   port: 8081
 spring:
