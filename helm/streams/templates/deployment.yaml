@@ -41,12 +41,22 @@ spec:
               containerPort: 8081
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/liveness
               port: http
           readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/readiness
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# install operators
+helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+helm repo add strimzi https://strimzi.io/charts/
+helm repo add postgres-operator-charts https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+helm upgrade --install strimzi strimzi/strimzi-kafka-operator
+helm upgrade --install postgres-operator postgres-operator-charts/postgres-operator
+
+# deploy kafka-cluster
+helm upgrade kafka-cluster ./helm/kafka-cluster --install
+
 # Build spring boot modules
 mvn -f optin-optout-library install
 mvn -f streams install
@@ -26,18 +36,8 @@ docker push localhost:5001/opt-out-poc/opt-in-out
 docker push localhost:5001/opt-out-poc/frontend
 docker push localhost:5001/optin-poc-kafka-connector:4.2.0
 
-# install operators
-helm repo add strimzi https://strimzi.io/charts/
-helm repo add postgres-operator-charts https://opensource.zalando.com/postgres-operator/charts/postgres-operator
-helm install strimzi strimzi/strimzi-kafka-operator
-helm install postgres-operator postgres-operator-charts/postgres-operator
-helm upgrade --install ingress-nginx ingress-nginx \
---repo https://kubernetes.github.io/ingress-nginx \
---namespace ingress-nginx --create-namespace
-
 # deploy
 helm upgrade frontend ./helm/frontend --install
-helm upgrade kafka-cluster ./helm/kafka-cluster --install
 helm upgrade kafka-connect ./helm/kafka-connect --install
 helm upgrade opt-in-out ./helm/opt-in-out --install
 helm upgrade streams ./helm/streams --install

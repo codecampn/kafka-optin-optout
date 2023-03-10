@@ -1,12 +1,6 @@
 server:
   port: 8080
 
-kafka:
-  topics:
-    - name: consent.preference
-      partitions: 3
-      replicas: 3
-
 replicaCount: 1
 
 image:
@@ -37,3 +31,7 @@ serviceAccount:
 
 autoscaling:
   enabled: false
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
