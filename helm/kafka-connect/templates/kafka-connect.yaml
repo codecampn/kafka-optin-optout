@@ -21,6 +21,9 @@ spec:
     config.storage.replication.factor: 3
     offset.storage.replication.factor: 3
     status.storage.replication.factor: 3
+    config.providers: secrets,configmaps
+    config.providers.secrets.class: io.strimzi.kafka.KubernetesSecretConfigProvider
+    config.providers.configmaps.class: io.strimzi.kafka.KubernetesConfigMapConfigProvider
   livenessProbe:
     periodSeconds: 60
     failureThreshold: 10

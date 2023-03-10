@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: connector-configuration-role
+  namespace: default
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["sinkuser.sink-database-minimal-cluster.credentials.postgresql.acid.zalan.do"]
+    verbs: ["get"]
