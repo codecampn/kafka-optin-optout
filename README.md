@@ -199,6 +199,7 @@ helm uninstall frontend
 helm uninstall opt-in-out
 helm repo remove postgres-operator-charts
 helm repo remove strimzi
+helm repo remove nginx-stable
 docker stop registry
 docker rm registry
 ```

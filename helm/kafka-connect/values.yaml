@@ -9,24 +9,7 @@ connect:
 #        certificate: ca.crt
 postgres:
   local: true
-  source:
-    deploymentActive: false
-#    name: postgres-source
-#    wal_level: "logical"
-#    connection:
-#      host: "pgsource-coc.postgres.database.azure.com"
-#      port: 5432
-#      database: "postgres"
-#      user: "psqladmin@pgsink"
-#      password: "n3PHbHlRlq8H"
-#    topic:
-#      prefix: "sourcedb" # output will be written in a topic with this prefix
-#    table:
-#      include:
-#        list: "public.customers" # list of tables to sync
-#    message:
-#      key:
-#        columns: "public.customers:customer_id"
+
   sink:
     deploymentActive: true
     name:  postgres-sink

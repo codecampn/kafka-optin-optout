@@ -12,8 +12,6 @@ kafka:
   users:
     - name: pocclient
 
-letsEncrypt:
-  enabled: false
 
 replicaCount: 1
 

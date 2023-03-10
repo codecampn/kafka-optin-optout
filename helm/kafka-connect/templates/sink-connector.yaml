@@ -12,7 +12,6 @@ spec:
     connection.url: jdbc:postgresql://{{ .Values.postgres.sink.connection.host }}:{{ .Values.postgres.sink.connection.port }}/{{ .Values.postgres.sink.connection.database }}
     connection.user: {{ .Values.postgres.sink.connection.user }}
     connection.password: ${secrets:default/sinkuser.sink-database-minimal-cluster.credentials.postgresql.acid.zalan.do:password}
-{{/*    connection.password: ${secrets:default/db-credentials:password}*/}}
     auto.create: {{ .Values.postgres.sink.autoCreate }}
     topics: {{ .Values.postgres.sink.topics }}
     pk.mode: {{ .Values.postgres.sink.pkMode }}

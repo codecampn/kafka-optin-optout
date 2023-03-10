@@ -1,9 +1,14 @@
 #!/bin/sh
 
+# Start local docker-image-registry
+docker run -d -p 5001:5000 --name registry registry:2.7 || docker start registry
+
 # install operators
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+helm repo add nginx-stable https://helm.nginx.com/stable
 helm repo add strimzi https://strimzi.io/charts/
 helm repo add postgres-operator-charts https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+helm repo update
+helm upgrade --install ingress-nginx nginx-stable/nginx-ingress
 helm upgrade --install strimzi strimzi/strimzi-kafka-operator
 helm upgrade --install postgres-operator postgres-operator-charts/postgres-operator
 
@@ -20,9 +25,6 @@ cd frontend
 yarn install
 yarn build
 cd ..
-
-# Start local docker-image-registry
-docker run -d -p 5001:5000 --name registry registry:2.7
 
 # Build docker images
 mvn -f optin-optout spring-boot:build-image
