@@ -87,6 +87,12 @@ After that, you can run the install and deploy script:
 sh build-and-deploy-all.sh
 ```
 
+wait, until all Pods are running. This could take some time. You can check this by running:
+```shell
+kubectl get pods
+```
+when all Pods are ready, visit [localhost](http://localhost) in the browser.
+
 
 ## B. Manual Installation
 
@@ -192,6 +198,14 @@ yarn
 yarn build
 yarn dev
 ```
+
+### 8. Visit the Frontend
+wait, until all Pods are running. This could take some time. You can check this by running:
+```shell
+kubectl get pods
+```
+when all Pods are ready, visit [localhost](http://localhost) in the browser.
+
 
 
 # Cleanup
