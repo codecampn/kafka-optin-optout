@@ -2,7 +2,7 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: sink-database-minimal-cluster
+  name: sink-database-cluster
 spec:
   patroni:
     pg_hba:

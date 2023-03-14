@@ -16,7 +16,7 @@ export default async function handler(
 async function getChannelConsents(): Promise<SinkDatabase> {
   const pool = new Pool({
     user: 'sinkuser',
-    host: 'sink-database-minimal-cluster',
+    host: process.env.DATABASE_HOST,
     database: 'postgres',
     password: process.env.DATABASE_PASSWORD,
     port: 5432, // or your PostgreSQL port number

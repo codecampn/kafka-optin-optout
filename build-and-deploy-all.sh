@@ -39,7 +39,7 @@ docker push localhost:5001/opt-out-poc/frontend
 docker push localhost:5001/optin-poc-kafka-connector:4.2.0
 
 # deploy
-helm upgrade frontend ./helm/frontend --install
 helm upgrade kafka-connect ./helm/kafka-connect --install
 helm upgrade opt-in-out ./helm/opt-in-out --install
 helm upgrade streams ./helm/streams --install
+helm upgrade frontend ./helm/frontend --install

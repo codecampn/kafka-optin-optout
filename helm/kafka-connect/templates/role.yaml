@@ -6,5 +6,5 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
-    resourceNames: ["sinkuser.sink-database-minimal-cluster.credentials.postgresql.acid.zalan.do"]
+    resourceNames: ["sinkuser.sink-database-cluster.credentials.postgresql.acid.zalan.do"]
     verbs: ["get"]

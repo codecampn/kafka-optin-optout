@@ -33,8 +33,10 @@ spec:
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: sinkuser.sink-database-minimal-cluster.credentials.postgresql.acid.zalan.do
+                  name: sinkuser.sink-database-cluster.credentials.postgresql.acid.zalan.do
                   key: password
+            - name: DATABASE_HOST
+              value: sink-database-cluster
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

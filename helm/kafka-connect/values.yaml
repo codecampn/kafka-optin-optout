@@ -14,7 +14,7 @@ postgres:
     deploymentActive: true
     name:  postgres-sink
     connection:
-      host: "sink-database-minimal-cluster"
+      host: "sink-database-cluster"
       port: 5432
       database: "postgres"
       user: "sinkuser"
