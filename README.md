@@ -91,7 +91,7 @@ wait, until all Pods are running. This could take some time. You can check this 
 ```shell
 kubectl get pods
 ```
-when all Pods are ready, visit [localhost](http://localhost) in the browser.
+when all Pods are ready, visit [localhost:3000](http://localhost:3000) in the browser.
 
 
 ## B. Manual Installation
