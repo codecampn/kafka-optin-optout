@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: localhost:5001/opt-out-poc/streams
+  pullPolicy: Always
+  tag: "latest"
+
+serviceAccount:
+  create: true
+
+service:
+  type: ClusterIP
+  port: 80
+
+autoscaling:
+  enabled: false
+
+ingress:
+  enabled: false
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""

@@ -1,0 +1,16 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "opt-in-out.fullname" . }}
+data:
+  server.port: "8080"
+  spring.kafka.producer.bootstrap-servers: "kafka-cluster-kafka-bootstrap:9092"
+  spring.kafka.producer.client-id: "client1"
+  spring.kafka.producer.key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+  spring.kafka.producer.value-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+  spring.kafka.consumer.bootstrap-servers: "kafka-cluster-kafka-bootstrap:9092"
+  spring.kafka.consumer.enable-auto-commit: "false"
+  spring.kafka.consumer.group-id: "group1"
+  spring.kafka.consumer.key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+  spring.kafka.consumer.value-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+

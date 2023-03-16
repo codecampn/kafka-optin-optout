@@ -88,7 +88,7 @@
                 <configuration>
 
                     <image>
-                        <name>cocregistry.azurecr.io/opt-out-poc/opt-in-out</name>
+                        <name>localhost:5001/opt-out-poc/opt-in-out</name>
                     </image>
 
                     <layers>

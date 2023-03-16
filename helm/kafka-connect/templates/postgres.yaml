@@ -2,8 +2,13 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: sink-database-minimal-cluster
+  name: sink-database-cluster
 spec:
+  patroni:
+    pg_hba:
+      - local all postgres  ident
+      - host all all 0.0.0.0/0 md5
+      - host replication replicator 0.0.0.0/0 md5
   teamId: "sink"
   volume:
     size: 1Gi

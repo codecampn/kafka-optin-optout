@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: sinkuser
-    password: qosUVdnOw2DBJL1JA6QMBrvkwRaFdlpna94mXPIaEW9uzr1S1HNOFGT1X5dOKm7r

@@ -1,5 +1,4 @@
 server.port: 8085
-production: false
 spring:
   kafka:
     producer:
@@ -13,3 +12,6 @@ spring:
       group-id: "group1-xy"
       key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
       value-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+management.endpoint.health.probes.enabled: true
+management.health.livenessState.enabled: true
+management.health.readinessState.enabled: true

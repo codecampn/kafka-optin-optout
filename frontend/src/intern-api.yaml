@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Database Info Service
+  license:
+    name: MIT
+paths:
+  /api/database:
+    get:
+      summary: Get customer consents
+      operationId: getSinkDatabase
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sinkDatabase'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - database
+  /api/ktable:
+    get:
+      summary: Get all Customer Consents
+      operationId: getAggregate
+      tags:
+        - aggregate
+      responses:
+        '200':
+          description: A list of Customer Consents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerConsents"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/grant-consent:
+      post:
+        summary: Give consent for advertisment in the given channel
+        operationId: invokeGrantConsent
+        tags:
+          - consent
+        requestBody:
+          description: "Target Mail or Phone"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - customerId
+                  - target
+                  - channel
+                properties:
+                  target:
+                    type: string
+                  customerId:
+                    type: string
+                  channel:
+                    type: string
+        responses:
+          '201':
+            description: Empty response
+            content: {}
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+  /api/revoke-consent:
+      post:
+        summary: Give consent for advertisment in the given channel
+        operationId: invokeRevokeConsent
+        tags:
+          - consent
+        requestBody:
+          description: "Target Mail or Phone"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - target
+                  - customerId
+                  - channel
+                properties:
+                  target:
+                    type: string
+                  customerId:
+                    type: string
+                  channel:
+                    type: string
+        responses:
+          '201':
+            description: Empty response
+            content: {}
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    sinkDatabase:
+      type: array
+      items:
+        type: object
+        required:
+          - customerId
+          - channel
+          - target
+          - source
+          - time
+        properties:
+          customerId:
+            type: string
+            description: The ID of the customer
+          channel:
+            type: string
+            description: The communication channel
+          target:
+            type: string
+            description: The target of the communication
+          source:
+            type: string
+            description: The source of the communication
+          time:
+            type: string
+            description: The time of the communication in Unix timestamp format
+    ChannelConsent:
+      type: object
+      required:
+        - channel
+        - consentDate
+        - source
+        - target
+      properties:
+        channel:
+          type: string
+        consentDate:
+          type: string
+        source:
+          type: string
+        target:
+          type: string
+    CustomerConsent:
+      type: object
+      required:
+        - customerId
+        - channelConsents
+      properties:
+        customerId:
+          type: string
+        channelConsents:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChannelConsent"
+    CustomerConsents:
+      type: array
+      items:
+        $ref: "#/components/schemas/CustomerConsent"

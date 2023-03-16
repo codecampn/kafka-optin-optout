@@ -31,6 +31,8 @@ public class SinkPrepareProcessor {
                 .map(((key, value) -> {
                     ConsentPreferenceKeyPayload newKey = new ConsentPreferenceKeyPayload(key, value.getTarget());
                     if(value.getType().equals("consent/AdvertisementConsentGivenEvent")) {
+
+                        System.out.print(value);
                         return new KeyValue<>(
                                 new ConsentPreferenceKey(newKey),
                                 new ConsentPreferenceValue(value));

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
-import { useRevokeConsent } from '@/api/opt-out';
 import axios from 'axios';
 import { PHONE_FORM_SCHEMA } from '@/components/schemas';
 import { OptInOut, OptInOutForm, OptInOutProps } from '@/components/OptInOut';
 import { FormikState } from 'formik';
+import { useInvokeRevokeConsent } from '@/api/internal-api';
 
 export function OptOutPhone() {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_OPTINOUT_BASE_URL;
+  axios.defaults.baseURL = '';
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
-  const { mutateAsync: mutateAsyncRevoke } = useRevokeConsent();
+  const { mutateAsync: mutateAsyncRevoke } = useInvokeRevokeConsent();
 
   const optOutPhone = async (
     values: OptInOutForm,
@@ -21,9 +21,11 @@ export function OptOutPhone() {
   ) => {
     setPending(true);
     mutateAsyncRevoke({
-      customerId: values.userId,
-      channel: 'phone',
-      data: { target: values.target},
+      data: {
+        target: values.target,
+        customerId: values.userId,
+        channel: 'phone',
+      },
     })
       .catch((e) => {
         setOptInError(e);

@@ -41,13 +41,12 @@ This project consists of several components that work together to manage and vis
 The following describes each part of the project in more detail:
 
 
-| Component            | Description                                                                                                                                                                                                                                                                                                                                       |
-|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| optin-optout         | - This is the backend for our frontend that takes opt-ins and opt-outs from users and writes them to a Kafka Topic.                                                                                                                                                                                                                               |
-| streams              | - The Streams component contains two processors.<br>- The first processor adds a schema to advertising consent events and writes them to a topic so that the Sink connector can read the data.<br>- The second processor contains a KTable with a key-value store that aggregates opt-ins and opt-outs and makes them available using a REST API. |
-| database-rest        | This app provides an API that returns the data in the database. This is used only for showcase for visualization of the database.                                                                                                                                                                                                                 |
-| optin-optout-library | This is a library that contains the opt-in out manager. This contains the producers and the necessary events.                                                                                                                                                                                                                                     |
-| frontend             | The frontend component provides users with the ability to subscribe or unsubscribe to receive newsletters. It also visualizes the current state of the State Store and the Database.                                                                                                                                                              |
+| Component            | Description                                                                                                                                                                                                                                                                                                                                     |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| optin-optout         | This is the backend for our frontend that takes opt-ins and opt-outs from users and writes them to a Kafka Topic.                                                                                                                                                                                                                               |
+| streams              | The Streams component contains two processors.<br>- The first processor adds a schema to advertising consent events and writes them to a topic so that the Sink connector can read the data.<br>- The second processor contains a KTable with a key-value store that aggregates opt-ins and opt-outs and makes them available using a REST API. |
+| optin-optout-library | This is a library that contains the opt-in out manager. This contains the producers and the necessary events.                                                                                                                                                                                                                                   |
+| frontend             | The frontend component provides users with the ability to subscribe or unsubscribe to receive newsletters. It also visualizes the current state of the State Store and the Database.                                                                                                                                                            |
 
 
 We hope this overview of the project structure helps you navigate through the project.
@@ -57,6 +56,14 @@ If you have any questions or problems, please contact the project team. Thank yo
 
 # Installation
 
+This section describes how to start the application, providing two different options.
+The first option uses an installation script to deploy all the required resources into a Kubernetes cluster.
+The second option deploys parts of the application into a Kubernetes cluster, while running the Spring Boot applications
+and the frontend locally on the host system.
+
+if you just want to try the application, choose the "Quick Installation".
+If you want to debug the applications or extend them yourself, then select "Manual Installation".
+
 ## Prerequisites
 
 - Java 19
@@ -64,6 +71,30 @@ If you have any questions or problems, please contact the project team. Thank yo
 - Docker installed
 - Helm installed
 - Maven installed
+
+## A. Quick Installation
+
+
+| There is one manual step you have to do first: |
+|------------------------------------------------|
+Download the plugin (confluentinc-kafka-connect-jdbc-10.6.0) from [confluent.io](https://www.confluent.io/hub/confluentinc/kafka-connect-jdbc) and place the
+zip file in "./connectors".
+Make sure you use the version 10.6.0, by selecting "Download previous versions".
+
+After that, you can run the install and deploy script:
+
+```shell
+sh build-and-deploy-all.sh
+```
+
+wait, until all Pods are running. This could take some time. You can check this by running:
+```shell
+kubectl get pods
+```
+when all Pods are ready, visit [localhost:3000](http://localhost:3000) in the browser.
+
+
+## B. Manual Installation
 
 ### 1. Install strimzi operator
 
@@ -82,52 +113,15 @@ This Command installs a Kafka cluster on your Kubernetes cluster.
 cd helm/kafka-cluster
 helm install kafka-cluster . 
 ```
-
 Now you have a Kafka-Cluster running on localhost:32100
 
-### 3. Build optin-optout-library
-
----
-Running "mvn install" in the library directory ensures that the library's artifacts are installed
-in your local maven repository, making them available to other projects that depend on them.
-```bash
-cd optin-optout-library
-mvn install
-```
-
-### 4. Build and run optin-optout application
-
----
-```bash
-cd optin-optout
-mvn install
-mvn spring-boot:run
-```
-### 5. Build and run streams application
-
----
-```bash
-cd streams
-mvn install
-mvn spring-boot:run
-```
-
-### 6. Build and run Frontend
-
----
-```bash
-cd frontend
-yarn
-yarn build
-yarn dev
-```
-
-### 7. Deploy Kafka-Connect with Sink-Connector
+### 3. Deploy Kafka-Connect with Sink-Connector
 
 ---
 To deploy Kafka-Connect we first have to build the docker image, including the JDBC-Plugin from Confluent.
 Download the plugin (confluentinc-kafka-connect-jdbc-10.6.0) from [confluent.io](https://www.confluent.io/hub/confluentinc/kafka-connect-jdbc) and place the
-zip file in "./connectors". 
+zip file in "./connectors".
+Make sure you use the version 10.6.0, by selecting "Download previous versions"
 
 Before we can build the image we need to deploy a local registry server.
 
@@ -154,47 +148,68 @@ cd helm/kafka-connect
 helm install kafka-connect .
 ```
 
-To get the password for the created database, run following command:
 
+
+
+### 4. Build optin-optout-library
+
+---
+Running "mvn install" in the library directory ensures that the library's artifacts are installed
+in your local maven repository, making them available to other projects that depend on them.
 ```bash
-echo $(kubectl get secret sinkuser.sink-database-minimal-cluster.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)
-```
-The password must now be entered in two places:
-
-- "./helm/kafka-connect/values.yaml" at postgres.sink.connection.password
-- "./database-rest/src/main/resources" at spring.datasource.password
-
-Afterwards we need to upgrade our kafka connect:
-
-```bash
-cd helm/kafka-connect
-helm upgrade kafka-connect .
+cd optin-optout-library
+mvn install
 ```
 
-### 8. Build and run database-rest application
+### 5. Build and run optin-optout application
 
-To access the database outside kubernetes we need to set port forwarding.
-
+---
 ```bash
-kubectl port-forward sink-database-minimal-cluster-0 5432:5432  
+cd optin-optout
+mvn install
+mvn spring-boot:run
 ```
-Afterwards in a new terminal you can start the application.
+### 6. Build and run streams application
 
+---
 ```bash
-cd database-rest
+cd streams
 mvn install
 mvn spring-boot:run
 ```
 
-## Cleanup
+### 7. Build and run Frontend
+
+Because the database is running in kubernetes und the frontend on the host we need to set port-forwarding, to be able to access the database
+```bash
+kubectl port-forward sink-database-cluster-0 5432:5432
+```
+
+We need the database password as well
+```bash
+echo $(kubectl get secret sinkuser.sink-database-cluster.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)
+```
+insert the DATABASE_PASSWORD into
+- frontend/.env.development
+---
+```bash
+cd frontend
+yarn
+yarn build
+yarn dev
+```
+
+### 8. Visit the Frontend
+wait, until all Pods are running. This could take some time. You can check this by running:
+```shell
+kubectl get pods
+```
+when all Pods are ready, visit [localhost](http://localhost) in the browser.
+
+
+
+# Cleanup
 
 ```bash
-helm uninstall kafka-cluster
-helm uninstall kafka-connect
-helm uninstall postgres-operator
-helm uninstall strimzi
-helm repo remove postgres-operator-charts
-helm repo remove strimzi
-docker stop registry
-docker rm registry
+sh cleanup.sh
 ```

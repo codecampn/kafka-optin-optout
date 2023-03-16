@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 
-import { useRevokeConsent } from '@/api/opt-out';
-
 import axios from 'axios';
 
 import { FormikState } from 'formik';
 import { OptInOut, OptInOutForm, OptInOutProps } from '../OptInOut';
 import { EMAIL_FORM_SCHEMA } from '../schemas';
+import { useInvokeRevokeConsent } from '@/api/internal-api';
 
 export function OptOutEmail() {
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_OPTINOUT_BASE_URL;
   const [optInError, setOptInError] = useState<string>();
   const [pending, setPending] = useState<boolean>(false);
 
-  const { mutateAsync: mutateAsyncRevoke } = useRevokeConsent();
+  const { mutateAsync: mutateAsyncRevoke } = useInvokeRevokeConsent();
 
   const optOutEmail = async (
     values: OptInOutForm,
@@ -23,9 +22,11 @@ export function OptOutEmail() {
   ) => {
     setPending(true);
     mutateAsyncRevoke({
-      customerId: values.userId,
-      channel: 'mail',
-      data: { target: values.target },
+      data: {
+        target: values.target,
+        customerId: values.userId,
+        channel: 'mail',
+      },
     })
       .catch((e) => {
         setOptInError(e);

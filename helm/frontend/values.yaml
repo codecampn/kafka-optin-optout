@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+replicaCount: 1
+
+image:
+  repository: localhost:5001/opt-out-poc/frontend
+  pullPolicy: Always
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: localhost
+      paths:
+        - pathType: Prefix
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80
+          path: /
+
+serviceAccount:
+  create: true
+
+autoscaling:
+  enabled: false
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
