@@ -66,11 +66,16 @@ If you want to debug the applications or extend them yourself, then select "Manu
 
 ## Prerequisites
 
-- Java 19
-- Kubernetes Cluster
-- Docker installed
-- Helm installed
-- Maven installed
+- **Java 19**
+
+  e.g. [Amazon Corretto 19](https://docs.aws.amazon.com/corretto/latest/corretto-19-ug/downloads-list.html)
+- **Kubernetes Cluster**
+
+  Use [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+  or [Rancher Desktop](https://rancherdesktop.io/) to create your local kubernetes cluster.
+- **Docker installed**
+- **Helm installed**
+- **Maven installed**
 
 ## A. Quick Installation
 
@@ -91,7 +96,7 @@ wait, until all Pods are running. This could take some time. You can check this 
 ```shell
 kubectl get pods
 ```
-when all Pods are ready, visit [localhost:3000](http://localhost:3000) in the browser.
+when all Pods are ready, visit [localhost:80](http://localhost:80) in the browser.
 
 
 ## B. Manual Installation
@@ -204,7 +209,7 @@ wait, until all Pods are running. This could take some time. You can check this 
 ```shell
 kubectl get pods
 ```
-when all Pods are ready, visit [localhost](http://localhost) in the browser.
+when all Pods are ready, visit [localhost:3000](http://localhost:3000) in the browser.
 
 
 
